@@ -200,3 +200,155 @@
 // }
 
 // console.log(nthTerm(arrToList([]), 0));
+
+// ======================================
+// Basic Problem 7 (Array helper methods)
+// ======================================
+
+// Filtering 
+
+// function filter(array, test) {
+//     let passed = [];
+//     for (let element of array) {
+//         if (test(element)) {
+//         passed.push(element);
+//         }
+//     }
+//     return passed;
+// }
+
+// console.log(filter(SCRIPTS, script => script.living));
+
+// Mapping
+
+// function map(array, transform) {
+//     let mapped = [];
+//     for (let element of array) {
+//         mapped.push(transform(element));
+//     }
+//     return mapped;
+// }
+
+// let rtlScripts = SCRIPTS.filter(s => s.direction == "rtl");
+
+// console.log(map(rtlScripts, s => s.name));
+
+// Reducing
+
+// function reduce(array, combine, start) {
+//     let current = start;
+//     for (let element of array) {
+//         current = combine(current, element);
+//     }
+//     return current;
+// }
+// console.log(reduce([1, 2, 3, 4], (a, b) => a + b, 0));
+
+// ======================================================================================
+// Basic Problem 8 (Program to log the amount of different scripts used in a given input)
+// ======================================================================================
+
+// Function to return script given character code
+
+// function characterScript(code) {
+//     for (let script of SCRIPTS) {
+//         if (script.ranges.some(([from, to]) => {
+//             return code >= from && code < to;
+//         })) {
+//             return script;
+//         }
+//     }
+//     return null;
+// }
+
+// function to group character count by script name
+
+// function countBy(items, groupName) {
+//     let counts = [];
+//     for (let item of items) {
+//         let name = groupName(item);
+//         let known = counts.findIndex(c => c.name == name);
+//         if (known == -1) {
+//             counts.push({name, count: 1});
+//         } else {
+//             counts[known].count++;
+//         }
+//     }
+//     return counts;
+// }
+
+// function to determine the percentage of each script used in the input
+
+// function textScripts(text) {
+//     let scripts = countBy(text, char => {
+//     let script = characterScript(char.codePointAt(0));
+//     return script ? script.name : "none";
+//     }).filter(({name}) => name != "none");
+//     let total = scripts.reduce((n, {count}) => n + count, 0);
+//     if (total == 0) return "No scripts found";
+//     return scripts.map(({name, count}) => {
+//         return `${Math.round(count * 100 / total)}% ${name}`;
+//     }).join(", ");
+// }
+
+// console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
+
+// =====================================================
+// Basic Problem 9 (Program to flatten a given 2D array)
+// =====================================================
+
+// let arrays = [[1, 2, 3], [4, 5], [6]];
+
+// console.log(arrays.reduce((flat, current) => flat.concat(current), []));
+
+// =============================================================
+// Basic Problem 10 (Program to implement my own looping method)
+// =============================================================
+
+// function loop(start, test, update, body) {
+//     for (let value = start; test(value); value = update(value)) {
+//       body(value);
+//     }
+// }
+  
+// loop(3, n => n > 0, n => n - 1, console.log);
+
+// =============================================================
+// Basic Problem 11 (Program to implement my own looping method)
+// =============================================================
+
+// function every(array, predicate) {
+//     for (let element of array) {
+//       if (!predicate(element)) return false;
+//     }
+//     return true;
+// }
+
+// function every2(array, predicate) {
+//     return !array.some(element => !predicate(element));
+// }
+
+// console.log(every([1, 3, 5], n => n < 10));
+
+// console.log(every([2, 4, 16], n => n < 10));
+
+// console.log(every([], n => n < 10));
+
+// ==================================================================
+// Basic Problem 12 (Program to determine dominant writing direction)
+// ==================================================================
+
+// function dominantDirection(text) {
+//     let counted = countBy(text, char => {
+//       let script = characterScript(char.codePointAt(0));
+//       return script ? script.direction : "none";
+//     }).filter(({name}) => name != "none");
+  
+//     if (counted.length == 0) return "ltr";
+  
+//     return counted.reduce((a, b) => a.count > b.count ? a : b).name;
+// }
+
+// console.log(dominantDirection("Hello!"));
+
+// console.log(dominantDirection("Hey, مساء الخير"));
