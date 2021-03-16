@@ -618,3 +618,176 @@ class VillageState {
         }
     }
 }
+
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+// Code to check the working of previous code
+
+// let first = new VillageState(
+//     "Post Office",
+//     [{place: "Post Office", address: "Alice's House"}]
+// );
+// let next = first.move("Alice's House");
+// console.log(next.place);
+
+// console.log(next.parcels);
+
+// console.log(first.place);
+
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+// Function to update the state of robot
+
+function runRobot(state, robot, memory) {
+    for (let turn = 0;; turn++) {
+        if (state.parcels.length == 0) {
+            console.log(`Done in ${turn} turns`);
+            break;
+        }
+        let action = robot(state, memory);
+        state = state.move(action.direction);
+        memory = action.memory;
+        console.log(`Moved to ${action.direction}`);
+    }
+}
+
+// function to randomly pick an element form an array
+
+function randomPick(array) {
+    let choice = Math.floor(Math.random() * array.length);
+    return array[choice];
+}
+
+// A robot that decides the next direction to move randomly
+
+function randomRobot(state) {
+    return {
+        direction: randomPick(roadGraph[state.place])
+    };
+}
+
+// class method to produce a set of random parcels
+
+VillageState.random = function(parcelCount = 5) {
+    let parcels = [];
+    for (let i = 0; i < parcelCount; i++) {
+        let address = randomPick(Object.keys(roadGraph));
+        let place;
+        do {
+            place = randomPick(Object.keys(roadGraph));
+        } while (place == address);
+        parcels.push({
+            place,
+            address
+        });
+    }
+    return new VillageState("Post Office", parcels);
+};
+
+// to run the random robot
+
+// runRobot(VillageState.random(), randomRobot);
+
+// Given mailroute that runs around the town
+
+var mailRoute = [
+    "Alice's House", "Cabin", "Alice's House", "Bob's House",
+    "Town Hall", "Daria's House", "Ernie's House",
+    "Grete's House", "Shop", "Grete's House", "Farm",
+    "Marketplace", "Post Office"
+];
+
+// robot that decides next direction according to mailroute given
+
+function routeRobot(state, memory) {
+    if (memory.length == 0) {
+        memory = mailRoute;
+    }
+    return {
+        direction: memory[0],
+        memory: memory.slice(1)
+    };
+}
+
+//  to run route robot
+
+// runRobot(VillageState.random(), routeRobot, []);
+
+// function to find an efficient route to move in
+
+function findRoute(graph, from, to) {
+    let work = [{
+        at: from,
+        route: []
+    }];
+    for (let i = 0; i < work.length; i++) {
+        let {
+            at,
+            route
+        } = work[i];
+        for (let place of graph[at]) {
+            if (place == to) return route.concat(place);
+            if (!work.some(w => w.at == place)) {
+                work.push({
+                    at: place,
+                    route: route.concat(place)
+                });
+            }
+        }
+    }
+}
+
+// a robot that acts according to efficient route found for it
+
+function goalOrientedRobot({
+    place,
+    parcels
+}, route) {
+    if (route.length == 0) {
+        let parcel = parcels[0];
+        if (parcel.place != place) {
+            route = findRoute(roadGraph, place, parcel.place);
+        } else {
+            route = findRoute(roadGraph, place, parcel.address);
+        }
+    }
+    return {
+        direction: route[0],
+        memory: route.slice(1)
+    };
+}
+
+// to run goal oriented robot
+
+// runRobot(VillageState.random(), goalOrientedRobot, []);
+
+// ================================================
+// Basic Problem 21 (Program to compare two robots)
+// ================================================
+
+// function countSteps(state, robot, memory) {
+//     for (let steps = 0;; steps++) {
+//       if (state.parcels.length == 0) return steps;
+//       let action = robot(state, memory);
+//       state = state.move(action.direction);
+//       memory = action.memory;
+//     }
+// }
+  
+//   function compareRobots(robot1, robot2) {
+//     let total1 = 0, total2 = 0;
+//     for (let i = 0; i < 100; i++) {
+//       let state = VillageState.random();
+//       total1 += countSteps(state, robot1, []);
+//       total2 += countSteps(state, robot2, []);
+//     }
+//     console.log(`Robot 1 needed ${total1 / 100} steps per task`)
+//     console.log(`Robot 2 needed ${total2 / 100}`)
+// }
+  
+// compareRobots(routeRobot, goalOrientedRobot);
+
+// ============================================================
+// Basic Problem 22 (Program to implement more efficient robot)
+// ============================================================
+
