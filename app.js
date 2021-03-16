@@ -352,3 +352,269 @@
 // console.log(dominantDirection("Hello!"));
 
 // console.log(dominantDirection("Hey, مساء الخير"));
+
+// ==========================================================
+// Basic Problem 13 (Program to implement an iterable matrix)
+// ==========================================================
+
+// class Matrix {
+//     constructor(width, height, element = (x, y) => undefined) {
+//         this.width = width;
+//         this.height = height;
+//         this.content = [];
+//         for (let y = 0; y < height; y++) {
+//             for (let x = 0; x < width; x++) {
+//                 this.content[y * width + x] = element(x, y);
+//             }
+//         }
+//     }
+//     get(x, y) {
+//         return this.content[y * this.width + x];
+//     }
+//     set(x, y, value) {
+//         this.content[y * this.width + x] = value;
+//     }
+// }
+
+// Matrix Iterator Class
+
+// class MatrixIterator {
+//     constructor(matrix) {
+//         this.x = 0;
+//         this.y = 0;
+//         this.matrix = matrix;
+//     }
+//     next() {
+//         if (this.y == this.matrix.height) return {done: true};
+//         let value = {
+//             x: this.x,
+//             y: this.y,
+//             value: this.matrix.get(this.x, this.y)
+//         };
+//         this.x++;
+//         if (this.x == this.matrix.width) {
+//             this.x = 0;
+//             this.y++;
+//         }
+//         return {value, done: false};
+//     }
+// }
+
+// Iterator function
+
+// Matrix.prototype[Symbol.iterator] = function() {
+//     return new MatrixIterator(this);
+// };
+
+// let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
+// for (let {x, y, value} of matrix) {
+//     console.log(x, y, value);
+// }
+
+// =======================================================================================
+// Basic Problem 14 (Program to inherit a symmetric matrix from the previous matrix class)
+// =======================================================================================
+
+// class SymmetricMatrix extends Matrix {
+//     constructor(size, element = (x, y) => undefined) {
+//         super(size, size, (x, y) => {
+//             if (x < y) return element(y, x);
+//             else return element(x, y);
+//         });
+//     }
+//     set(x, y, value) {
+//         super.set(x, y, value);
+//         if (x != y) {
+//             super.set(y, x, value);
+//         }
+//     }
+// }
+//     let matrix = new SymmetricMatrix(5, (x, y) => `${x},${y}`);
+//     console.log(matrix.get(2, 3));
+
+// ============================================================
+// Basic Problem 15 (Program to convert celsius into farenheit)
+// ============================================================
+
+// class Temperature {
+//     constructor(celsius) {
+//         this.celsius = celsius;
+//     }
+//     get fahrenheit() {
+//         return this.celsius * 1.8 + 32;
+//     }
+//     set fahrenheit(value) {
+//         this.celsius = (value - 32) / 1.8;
+//     }
+//     static fromFahrenheit(value) {
+//         return new Temperature((value - 32) / 1.8);
+//     }
+// }
+// let temp = new Temperature(22);
+// console.log(temp.fahrenheit);
+
+// temp.fahrenheit = 86;
+// console.log(temp.celsius);
+
+// ===============================================
+// Basic Problem 16 (Program to implement vectors)
+// ===============================================
+
+// class Vec {
+//     constructor(x, y) {
+//       this.x = x;
+//       this.y = y;
+//     }
+  
+//     plus(other) {
+//       return new Vec(this.x + other.x, this.y + other.y);
+//     }
+  
+//     minus(other) {
+//       return new Vec(this.x - other.x, this.y - other.y);
+//     }
+  
+//     get length() {
+//       return Math.sqrt(this.x * this.x + this.y * this.y);
+//     }
+// }
+  
+// console.log(new Vec(1, 2).plus(new Vec(2, 3)));
+
+// console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+
+// console.log(new Vec(3, 4).length);
+
+// ================================================================================
+// Basic Problem 17 (Program to implement Group data structure with helper methods)
+// ================================================================================
+
+// class Group {
+//     constructor() {
+//       this.members = [];
+//     }
+  
+//     add(value) {
+//       if (!this.has(value)) {
+//         this.members.push(value);
+//       }
+//     }
+  
+//     delete(value) {
+//       this.members = this.members.filter(v => v !== value);
+//     }
+  
+//     has(value) {
+//       return this.members.includes(value);
+//     }
+  
+//     static from(collection) {
+//       let group = new Group;
+//       for (let value of collection) {
+//         group.add(value);
+//       }
+//       return group;
+//     }
+// }
+  
+// let group = Group.from([10, 20]);
+// console.log(group.has(10));
+
+// console.log(group.has(30));
+
+// group.add(10);
+// group.delete(10);
+// console.log(group.has(10));
+
+// =========================================================================
+// Basic Problem 18 (Program to implement iterator for Group data structure)
+// =========================================================================
+
+// Group.prototype[Symbol.iterator] = function() {
+//     return new GroupIterator(this);
+// }
+
+// class GroupIterator {
+//     constructor(group) {
+//       this.group = group;
+//       this.position = 0;
+//     }
+  
+//     next() {
+//       if (this.position >= this.group.members.length) {
+//         return {done: true};
+//       } else {
+//         let result = {value: this.group.members[this.position],
+//                       done: false};
+//         this.position++;
+//         return result;
+//       }
+//     }
+// }
+
+// for (let value of Group.from(["a", "b", "c"])) {
+// console.log(value);
+// }
+
+// =====================================================================================================================================
+// Basic Problem 19 (Program to implement alternate way to figure out if a property brlongs to that object alone but not it's prototype)
+// =====================================================================================================================================
+
+// let map = {one: true, two: true, hasOwnProperty: true};
+
+// console.log(Object.prototype.hasOwnProperty.call(map, "one"));
+
+// ====================================================================================
+// Basic Problem 20 (Program to implement a robot for delivering mails around the town)
+// ====================================================================================
+
+// Network of roads from one place to another 
+
+const roads = [
+    "Alice's House-Bob's House", "Alice's House-Cabin",
+    "Alice's House-Post Office", "Bob's House-Town Hall",
+    "Daria's House-Ernie's House", "Daria's House-Town Hall",
+    "Ernie's House-Grete's House", "Grete's House-Farm",
+    "Grete's House-Shop", "Marketplace-Farm",
+    "Marketplace-Post Office", "Marketplace-Shop",
+    "Marketplace-Town Hall", "Shop-Town Hall"
+];
+
+// function to convert edges into a graph
+
+function buildGraph(edges) {
+    let graph = Object.create(null);
+    function addEdge(from, to) {
+        if (graph[from] == null) {
+            graph[from] = [to];
+        } else {
+            graph[from].push(to);
+        }
+    }
+    for (let [from, to] of edges.map(r => r.split("-"))) {
+        addEdge(from, to);
+        addEdge(to, from);
+    }
+    return graph;
+}
+const roadGraph = buildGraph(roads);
+
+// A class to update the state of robot and the parcels
+
+class VillageState {
+    constructor(place, parcels) {
+        this.place = place;
+        this.parcels = parcels;
+    }
+    move(destination) {
+        if (!roadGraph[this.place].includes(destination)) {
+            return this;
+        } else {
+            let parcels = this.parcels.map(p => {
+                if (p.place != this.place) return p;
+                return {place: destination, address: p.address};
+            }).filter(p => p.place != p.address);
+            return new VillageState(destination, parcels);
+        }
+    }
+}
