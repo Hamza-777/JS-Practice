@@ -862,3 +862,77 @@
 // console.log(a.has("b"));
 
 // console.log(b.has("a"));
+
+// =========================================================================================
+// Basic Problem 24 (Program to implement a retrying program that goes on until it succeeds)
+// =========================================================================================
+
+// class MultiplicatorUnitFailure extends Error {}
+
+// function primitiveMultiply(a, b) {
+//   if (Math.random() < 0.2) {
+//     return a * b;
+//   } else {
+//     throw new MultiplicatorUnitFailure("☠️☠️☠️");
+//   }
+// }
+
+// function retry() {
+//     for (;;) {
+//         try {
+//             let result = primitiveMultiply(7, 7);
+//             console.log("Your answer ", result);
+//             break;
+//         } catch (e) {
+//             if (e instanceof MultiplicatorUnitFailure) {
+//                 console.log("Not Possible...☠️☠️☠️");
+//             } else {
+//                 throw e;
+//             }
+//         }
+//     }
+// }
+
+// retry();
+
+// ====================================================
+// Basic Problem 25 (Program to implement a locked box)
+// ====================================================
+
+// const box = {
+//     locked: true,
+//     unlock() { this.locked = false; },
+//     lock() { this.locked = true;  },
+//     _content: [],
+//     get content() {
+//       if (this.locked) throw new Error("Locked!");
+//       return this._content;
+//     }
+// };
+
+// function withBoxUnlocked(body) {
+//     if (box.locked) {
+//         box.unlock();
+//         try {
+//             return body();
+//         } finally {
+//             box.lock();
+//         }
+//     } else {
+//         return body();
+//     }
+// }
+
+// withBoxUnlocked(function() {
+//     box.content.push("gold piece");
+// });
+
+// try {
+//     withBoxUnlocked(function() {
+//         throw new Error("Pirates on the horizon! Abort!");
+//     });
+// } catch (e) {
+//     console.log("Error raised: " + e);
+// }
+
+// console.log(box.locked);
