@@ -936,3 +936,51 @@
 // }
 
 // console.log(box.locked);
+
+// ========================================================
+// Basic Problem 26 (Program to identify and return a Date)
+// ========================================================
+
+// function getDate(string) {
+//     let [_, month, day, year] =
+//     /(\d{1,2})-(\d{1,2})-(\d{4})/.exec(string);
+//     return new Date(year, month - 1, day);
+//     // return [_, month, day, year];
+// } // _ here ignores the fully matched value
+// console.log(getDate("1-30-2003"));
+
+// ==============================================================================
+// Basic Problem 27 (Program to update the stocks after deductiong one from each)
+// ==============================================================================
+
+// let stock = "1 lemon, 2 cabbages, and 101 eggs";
+// function minusOne(match, amount, unit) {
+//     amount = Number(amount) - 1;
+//     if (amount == 1) { // only one left, remove the 's'
+//         unit = unit.slice(0, unit.length - 1);
+//     } else if (amount == 0) {
+//         amount = "no";
+//     }
+//     return amount + " " + unit;
+// }
+// console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
+
+// =================================================
+// Basic Problem 28 (Program to get rid of comments)
+// =================================================
+
+// Greedy Way
+// function stripComments(code) {
+//     return code.replace(/\/\/.*|\/\*[^]*\*\//g, "");
+// }
+// console.log(stripComments("1 + /* 2 */3"));
+
+// Non-Greedy Way (that is when you add a question mark next to *, + they become non greedy)
+// function stripComments(code) {
+//     return code.replace(/\/\/.*|\/\*[^]*?\*\//g, "");
+// }
+// console.log(stripComments("1 /* a */+/* b */ 1"));
+
+// =================================================
+// Basic Problem 29 (Program to get rid of comments)
+// =================================================
