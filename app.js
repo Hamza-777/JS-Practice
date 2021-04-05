@@ -981,6 +981,24 @@
 // }
 // console.log(stripComments("1 /* a */+/* b */ 1"));
 
-// =================================================
-// Basic Problem 29 (Program to get rid of comments)
-// =================================================
+// ======================================================
+// Basic Problem 29 (Program to better understand RegExp)
+// ======================================================
+
+// let name = "harry";
+// let text = "Harry is a suspicious character.";
+// let regexp = new RegExp("\\b(" + name + ")\\b", "gi");
+// console.log(text.replace(regexp, "_$1_"));
+
+// let name = "dea+hl[]rd";
+// let text = "This dea+hl[]rd guy is super annoying.";
+// let escaped = name.replace(/[\\[.+*?(){|^$]/g, "\\$&");
+// let regexp = new RegExp("\\b" + escaped + "\\b", "gi");
+// console.log(text.replace(regexp, "_$&_"));
+
+// let input = "A string with 3 numbers in it... 42 and 88.";
+// let number = /\b\d+\b/g;
+// let match;
+// while (match = number.exec(input)) {
+// console.log("Found", match[0], "at", match.index);
+// }
